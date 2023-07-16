@@ -9,46 +9,50 @@
     <title>Find a Film</title>
 </head>
 <body>
-    <img class="background" src="assets/pexels-pietro-jeng-65128.jpg" alt="">
-    <nav>
-        <div class="film__logo">
-            Find a Film <i class="fa-solid fa-film"></i>
-        </div>
-        <ul class="nav__link--list">
-            <li class="nav__link">
-                <a href="#" class="
-                    nav__link--anchor
-                    link__hover-effect
-                    link__hover-effect--black
-                ">Home</a>
-            </li>
-            <li class="nav__link">
-                <a href="#" class="
-                    nav__link--anchor
-                    link__hover-effect
-                    link__hover-effect--black
-                ">Find a Film</a>
-            </li>
-            <li class="nav__link">
-                <a href="mailto:georgia.m.vrana@gmail.com" class="
-                    nav__link--anchor
-                    nav__link--anchor-primary
-                ">Contact</a>
-            </li>   
-        </ul>
-    </nav>
-    <header>
-        <div class="container">
-            <h1 class="header__title">Browse our Films</h1>
-            <div class="wrapper">
-                <input class="search" type="text" placeholder="Search by Keywords (like 'fast')">
-                <button class="submit" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <div class="background__img">
+        <nav>
+            <div class="film__logo">
+                Find a Film <i class="fa-solid fa-film"></i>
             </div>
-        </div>
-    </header>
-    <div class="contain">
-        <div class="wrap">
+            <ul class="nav__link--list">
+                <li class="nav__link">
+                    <a href="#" class="
+                        nav__link--anchor
+                        link__hover-effect
+                        link__hover-effect--black
+                    ">Home</a>
+                </li>
+                <li class="nav__link">
+                    <a href="#" class="
+                        nav__link--anchor
+                        link__hover-effect
+                        link__hover-effect--black
+                    ">Find a Film</a>
+                </li>
+                <li class="nav__link">
+                    <a href="mailto:georgia.m.vrana@gmail.com" class="
+                        nav__link--anchor
+                        nav__link--anchor-primary
+                    ">Contact</a>
+                </li>   
+            </ul>
+        </nav>
+        <header>
+            <div class="container">
+                <h1 class="header__title">Browse our Films</h1>
+                <form class="form">
+                    <input class="search" type="text" placeholder="Search by Keywords (like 'fast')">
+                    <button class="submit" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </header>
+    </div>
+    <div class="container">
+        <div class="wrapper">
             <h2 class="search__results">Search Results:</h2>
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+            </div>
         </div>
     </div>
 </body>
