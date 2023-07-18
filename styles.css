@@ -196,13 +196,20 @@ SEARCH RESULTS AND SLIDER
 
 
 .wrapper {
-    max-width: 800px;
+    max-width: 1000px;
     display: flex;
     justify-content: space-between;
+    margin: 0 auto; /* Add automatic margins on the left and right */
 }
+
 
 .search__results {
     margin: 60px 0;
+}
+
+.slidecontainer {
+    display: flex;
+    align-items: center;
 }
 
 .slider {
