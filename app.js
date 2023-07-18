@@ -8,7 +8,7 @@ slider.oninput = function() {
   let percentage = (this.value - this.min) / (this.max - this.min) * 100;
   this.style.background = `linear-gradient(to right, #d3d3d3 ${percentage}%, #400A14 ${percentage}%)`;
   output.style.left = `calc(${percentage}% - (25px / 2))`;
-  output.innerHTML = `%${slider.value}<`;
+  output.innerHTML = `%${slider.value}`;
 }
 
 slider.addEventListener('input', slider.oninput);
