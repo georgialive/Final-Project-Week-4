@@ -1,5 +1,5 @@
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
+const slider = document.getElementById("myRange");
+const output = document.getElementById("demo");
 output.innerHTML = slider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
@@ -10,9 +10,9 @@ slider.oninput = function() {
 
 function move(event) {
 
-    var elem = document.getElementById("myBar");
-    var width = 1;
-    var id = setInterval(frame, 10);
+    const elem = document.getElementById("myBar");
+    const width = 1;
+    const id = setInterval(frame, 10);
    
     function frame() {
       if (width >= 100) {
