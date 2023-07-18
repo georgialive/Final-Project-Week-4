@@ -210,6 +210,13 @@ SEARCH RESULTS AND SLIDER
 .slidecontainer {
     display: flex;
     align-items: center;
+    position: relative; /* make position relative so absolute positioned children are positioned relative to this */
+}
+
+.thumb__value {
+    position: absolute;
+    top: 30px; /* adjust this value to move the span up/down */
+    left: 0;
 }
 
 .slider {
