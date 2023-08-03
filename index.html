@@ -41,21 +41,43 @@
             <div class="container-1">
                 <h1 class="header__title">Browse our Films</h1>
                 <form class="form">
-                    <input class="search" type="text" placeholder="Search by Keywords (like 'fast')">
+                    <input 
+                    id="searchInput"
+                    class="search" 
+                    type="text" 
+                    placeholder="Search by Keywords (like 'fast')"
+                    required
+                    onchange="searchMovies()">
                     <button class="submit" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
         </header>
     </div>
-    <div class="container">
-        <div class="wrapper">
-            <h2 class="search__results">Search Results:</h2>
-            <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
-                <div class="thumb__value" id="demo">%50</div> <!-- added thumbValue class --></div>
+    <main>
+        <div class="container">
+            <div class="wrapper">
+                <h2 class="search__results">Search Results:</h2>
+                <div class="slidecontainer">
+                    <input 
+                        type="range" 
+                        min="0" 
+                        max="100" 
+                        value="50" 
+                        class="slider"
+                        id="myRange"
+                        onchange="percentageFilter(event)">
+                    <div class="thumb__value" id="demo">%50</div> <!-- added thumbValue class --></div>
+                </div>
+                <div class="loading">
+                    <i
+                      class="fas fa-spinner movies__loading--spinner"
+                      aria-hidden="true"
+                    ></i>
+                </div>
+                <div id="moviesContainer" class="movies"></div>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 <script src="app.js"></script>
 </html>
