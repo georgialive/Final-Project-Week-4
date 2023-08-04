@@ -1,8 +1,25 @@
 let movies = [];
+let form = document.querySelector('.form');
+let searchInput = document.querySelector('#searchInput').value;
 const slider = document.getElementById("myRange");
-const output = document.getElementById("demo");
-const searchInput = document.getElementById("searchInput");
+const output = document.getElementById("thumbValue");
 const moviesContainer = document.getElementById("moviesContainer");
+
+
+async function getMovies() {
+  const searchInput = document.getElementById("searchInput").value;
+  const response = await fetch(`https://www.omdbapi.com/?t=${searchInput || `fast`}&apikey=20f3288f`);
+  const movieData = await response.json();
+  return movieData.Search;
+}
+
+getMovies()
+  .then(data => {
+    movies = data; // Store the movies data
+    renderMovies(); // Call renderMovies instead of renderMovie
+  })
+  .catch(error => console.error('Error:', error));
+
 
 output.innerHTML = slider.value;
 const thumbWidth = 25;
@@ -13,64 +30,86 @@ slider.oninput = function() {
   this.style.background = `linear-gradient(to right, #d3d3d3 ${percentage}%, #400A14 ${percentage}%)`;
   output.style.left = `calc(${percentage}% - (${thumbWidth}px / 2))`;
   output.innerHTML = `%${slider.value}`;
-  searchMovies();
+
+  renderMovies();
 }
 
 slider.addEventListener('input', slider.oninput);
 
 slider.oninput();
 
-async function searchMovies() {
-    const response = await fetch(`https://www.omdbapi.com/?apikey=20f3288f&s=${searchInput.value}`);
-    const data = await response.json();
-    movies = data.Search;
-    displayMovies();
+
+async function renderMovies(filter) {
+    const moviesWrapper = document.querySelector('.movies');
+    moviesWrapper.classList.add(' movies__loading');
+    moviesWrapper.classList.remove(' movies__loading');
+
+    const filteredMovies = movies.filter(movie => {
+      let ratingsArray = Array.isArray(movie.Ratings) ? movie.Ratings : transformRatings(movie.Ratings);
+      let average = averageRating(ratingsArray);
+      return average >= slider.value;
+    });
+
+    const moviesHTML = filteredMovies.map((movie) => {
+        return `<div class="movie">
+            <figure class="movie__img--wrapper">
+                <img class="movie__img" src="${movie.Poster}" alt="">
+            </figure>
+            <div class="movie__title">
+                ${movie.Title}
+            </div>
+            <div class="movie__ratings">
+                ${ratingsHTML(averageRating(movie.Ratings))}
+            </div>
+        </div>`;
+    }).join("");
+
+    moviesWrapper.innerHTML = moviesHTML;
 }
 
-function displayMovies() {
-  const sliderValue = slider.value / 100;
+function searchMovies() {
+  const searchInput = document.querySelector('#searchInput').value;
+  movies = movies.filter(movie => movie.Title.includes(searchInput));
+  renderMovies();
+}
 
-  const filteredMovies = movies.filter(movie => {
-      const avgRating = movie.Ratings.reduce((acc, curr) => {
-          // Check if rating is in percentage
-          if (curr.Value.includes('%')) {
-              return acc + parseFloat(curr.Value) / 10; // Convert percentage to 0-10 scale
-          } else {
-              return acc + parseFloat(curr.Value.split('/')[0]);
-          }
-      }, 0) / movie.Ratings.length;
+function transformRatings(ratingsObject) {
+  return Object.entries(ratingsObject).map(([source, value]) => {
+      return { Source: source, Value: value };
+  });
+}
 
-      return avgRating / 10 >= sliderValue; // Convert rating to a 0-1 scale
+function averageRating(ratingsObject) {
+  let ratings = transformRatings(ratingsObject);
+  let totalRating = 0;
+
+  ratings.forEach(rating => {
+      if(rating.Source === "Internet Movie Database"){
+          totalRating += parseFloat(rating.Value.split("/")[0]);
+      } else if(rating.Source === "Rotten Tomatoes" || rating.Source === "Metacritic"){
+          totalRating += parseFloat(rating.Value.replace("%","")) / 10;
+      }
   });
 
-  const htmlString = filteredMovies.map((movie) => {
-      return `
-          <div class="card">
-              <img class="card__img" src="${movie.Poster}" alt="${movie.Title}">
-              <h2 class="card__title">${movie.Title} (${movie.Year})</h2>
-              <p class="card__rating">Rating: ${movie.imdbRating}/10</p>
-          </div>
-      `;
-  }).join('');
-
-  moviesContainer.innerHTML = htmlString;
+  return totalRating / ratings.length;
 }
 
-async function getMovieDetails(imdbID) {
-  const response = await fetch(`https://www.omdbapi.com/?apikey=20f3288f&i=${imdbID}`);
-  const data = await response.json();
-  return data;
+function ratingsHTML(rating) {
+    let ratingHTML = '';
+    for (let i = 0; i < Math.floor(rating); ++i) {
+        ratingHTML += '<i class="fas fa-star"></i>\n';
+    }
+    if (!Number.isInteger(rating)) {
+        ratingHTML += '<i class="fas fa-star-half-alt"></i>\n';
+    }
+    return ratingHTML;
 }
 
-async function searchMovies() {
-  const response = await fetch(`https://www.omdbapi.com/?apikey=20f3288f&s=${searchInput.value}`);
-  const data = await response.json();
-  if (data.Search && Array.isArray(data.Search)) {
-      movies = await Promise.all(data.Search.map(movie => getMovieDetails(movie.imdbID)));
-      displayMovies();
-  } else {
-      console.error('Invalid data:', data);
-      moviesContainer.innerHTML = 'No movies found.';
-  }
+function filterMovies(event) {
+    renderMovies(event.target.value);
 }
+
+setTimeout(() => {
+    renderMovies();
+});
 

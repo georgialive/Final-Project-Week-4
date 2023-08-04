@@ -53,31 +53,51 @@
             </div>
         </header>
     </div>
-    <main>
-        <div class="container">
-            <div class="wrapper">
-                <h2 class="search__results">Search Results:</h2>
-                <div class="slidecontainer">
-                    <input 
-                        type="range" 
-                        min="0" 
-                        max="100" 
-                        value="50" 
-                        class="slider"
-                        id="myRange"
-                        onchange="percentageFilter(event)">
-                    <div class="thumb__value" id="demo">%50</div> <!-- added thumbValue class --></div>
+    <main id="films__main">
+        <section>
+            <div class="container">
+                <div class="wrapper">
+                    <h2 class="search__results">Search Results:</h2>
+                    <div class="slidecontainer">
+                        <input 
+                            type="range" 
+                            min="0" 
+                            max="100" 
+                            value="50" 
+                            class="slider"
+                            id="myRange"
+                            onchange="slider.oninput()">
+                        <div class="thumb__value" id="thumbValue">%50</div> <!-- added thumbValue class --></div>
+                    </div>
+                    <div class="movies movies__loading">
+                        <i class="fa-solid fa-spinner"></i>
+                    </div>
+                    <!-- <div id="moviesContainer" class="movies"></div> -->
                 </div>
-                <div class="loading">
-                    <i
-                      class="fas fa-spinner movies__loading--spinner"
-                      aria-hidden="true"
-                    ></i>
-                </div>
-                <div id="moviesContainer" class="movies"></div>
             </div>
-        </div>
+        </section>
     </main>
+
+    <footer>
+        <div class="container">
+          <div class="row row__column">
+                <a href="#">
+                    <figure class="footer__logo">
+                        <div class="film__logo">
+                            Find a Film <i class="fa-solid fa-film"></i>
+                        </div>
+                    </figure>
+                </a>
+                <div class="footer__list">
+                    <a href="#" class="footer__link">Home</a>
+                    <a class="footer__link no-cursor">About</a>
+                    <a href="#header" class="footer__link">Films</a>
+                    <a class="footer__link no-cursor">Contact</a>
+                </div>
+                <div class="footer__copyright">Copyright &copy; 2021 Georgia Vrana</div>
+          </div>
+        </div>
+    </footer>
 </body>
 <script src="app.js"></script>
 </html>
