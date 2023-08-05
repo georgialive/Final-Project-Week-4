@@ -41,8 +41,8 @@ slider.oninput();
 
 async function renderMovies(filter) {
     const moviesWrapper = document.querySelector('.movies');
-    moviesWrapper.classList.add(' movies__loading');
-    moviesWrapper.classList.remove(' movies__loading');
+    moviesWrapper.classList.add('movies__loading');
+    moviesWrapper.classList.remove('movies__loading');
 
     const filteredMovies = movies.filter(movie => {
       let ratingsArray = Array.isArray(movie.Ratings) ? movie.Ratings : transformRatings(movie.Ratings);
