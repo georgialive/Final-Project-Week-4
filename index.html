@@ -40,15 +40,17 @@
         <header>
             <div class="container-1">
                 <h1 class="header__title">Browse our Films</h1>
-                <form class="form">
+                <form class="form"
+                      onsubmit="searchMovies()">
                     <input 
-                    id="searchInput"
-                    class="search" 
-                    type="text" 
-                    placeholder="Search by Keywords (like 'fast')"
-                    required
-                    onchange="searchMovies()">
-                    <button class="submit" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        id="searchInput"
+                        class="search" 
+                        type="text" 
+                        placeholder="Search by Keywords (like 'fast')">
+                    <button class="submit" 
+                            type="submit"
+                            onclick="searchMovies()">
+                    <i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
         </header>
