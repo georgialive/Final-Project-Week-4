@@ -1,48 +1,39 @@
 let movies = [];
-let form = document.querySelector('.form');
-let searchInput = document.querySelector('#searchInput').value;
+const searchInput = document.querySelector('#searchInput');
 const slider = document.getElementById("myRange");
 const output = document.getElementById("thumbValue");
-const moviesContainer = document.getElementById("moviesContainer");
-
+const moviesWrapper = document.querySelector('.movies');
 
 async function getMovies() {
-  const searchInput = document.getElementById("searchInput").value;
-  const response = await fetch(`https://www.omdbapi.com/?t=${searchInput || `fast`}&apikey=20f3288f`);
+  const response = await fetch(`https://www.omdbapi.com/?t=${searchInput.value || 'fast'}&apikey=20f3288f`);
   const movieData = await response.json();
   return movieData.Search;
 }
 
-getMovies()
-  .then(data => {
-    movies = data; // Store the movies data
-    renderMovies(); // Call renderMovies instead of renderMovie
-  })
-  .catch(error => console.error('Error:', error));
+  function setupSlider() {
+    output.innerHTML = slider.value;
+    const thumbWidth = 25;
+  
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+      let percentage = (this.value - this.min) / (this.max - this.min) * 100;
+      this.style.background = `linear-gradient(to right, #d3d3d3 ${percentage}%, #400A14 ${percentage}%)`;
+      output.style.left = `calc(${percentage}% - (${thumbWidth}px / 2))`;
+      output.innerHTML = `%${slider.value}`;
+  
+      renderMovies();
+    };
+  
+    slider.oninput();
+  }
 
 
-output.innerHTML = slider.value;
-const thumbWidth = 25;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-  let percentage = (this.value - this.min) / (this.max - this.min) * 100;
-  this.style.background = `linear-gradient(to right, #d3d3d3 ${percentage}%, #400A14 ${percentage}%)`;
-  output.style.left = `calc(${percentage}% - (${thumbWidth}px / 2))`;
-  output.innerHTML = `%${slider.value}`;
-
-  renderMovies();
-}
-
-slider.addEventListener('input', slider.oninput);
-
-slider.oninput();
-
-
-async function renderMovies(filter) {
+async function renderMovies() {
     const moviesWrapper = document.querySelector('.movies');
     moviesWrapper.classList.add('movies__loading');
-    moviesWrapper.classList.remove('movies__loading');
+    moviesWrapper.innerHTML = '';
+
+    movies = await getMovies();
 
     const filteredMovies = movies.filter(movie => {
       let ratingsArray = Array.isArray(movie.Ratings) ? movie.Ratings : transformRatings(movie.Ratings);
@@ -65,6 +56,7 @@ async function renderMovies(filter) {
     }).join("");
 
     moviesWrapper.innerHTML = moviesHTML;
+    moviesWrapper.classList.remove('movies__loading');
 }
 
 function searchMovies() {
@@ -113,3 +105,4 @@ setTimeout(() => {
     renderMovies();
 });
 
+setupSlider();
