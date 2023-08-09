@@ -5,9 +5,9 @@ const output = document.getElementById("thumbValue");
 const moviesWrapper = document.querySelector('.movies');
 
 async function getMovies() {
-  const response = await fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=20f3288f&s=${searchInput.value || 'fast'}`);
+  const response = await fetch(`https://www.omdbapi.com/?&apikey=20f3288f&s=${searchInput}`);
   const movieData = await response.json();
-  return movieData.Search;
+  return movieData.Search || [];
 }
 
   function setupSlider() {
