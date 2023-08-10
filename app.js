@@ -5,15 +5,17 @@ const output = document.getElementById("thumbValue");
 const moviesWrapper = document.querySelector('.movies');
 let moviesData = {};
 
-async function getMovies() {
+async function getMovies(searchTerm) {
   const response = await fetch(`https://www.omdbapi.com/?&apikey=20f3288f&s=${searchInput}`);
   return await response.json();
 }
 
-async function searchMovies(searchInput) {
-  moviesData = await getMovies(searchInput);
-  renderMovies();
-}
+// async function searchMovies(searchInput) {
+//   moviesData = await getMovies(searchInput);
+//   renderMovies();
+// }
+
+// Commenting out the duplicate searchMovies function
 
   function setupSlider() {
     output.innerHTML = slider.value;
@@ -28,8 +30,6 @@ async function searchMovies(searchInput) {
   
       renderMovies();
     };
-
-  
     slider.oninput();
   }
 
@@ -54,9 +54,11 @@ async function searchMovies() {
   renderMovies();
 }
 
-function filterMovies(event) {
-    renderMovies(event.target.value);
-}
+// function filterMovies(event) {
+//     renderMovies(event.target.value);
+// }
+
+// Commented out the unused filterMovies function
 
 function setupSlider() {
   output.innerHTML = slider.value;
@@ -89,7 +91,7 @@ function movieHTML(movie) {
 
 
 setTimeout(() => {
-    renderMovies();
-});
+    searchMovies(); // Call searchMovies instead of renderMovies to get initial data
+}, 1000);
 
 setupSlider();
