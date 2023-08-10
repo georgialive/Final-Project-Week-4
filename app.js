@@ -60,22 +60,6 @@ async function searchMovies() {
 
 // Commented out the unused filterMovies function
 
-function setupSlider() {
-  output.innerHTML = slider.value;
-  const thumbWidth = 25;
-
-  slider.oninput = function () {
-    output.innerHTML = this.value;
-    let percentage = ((this.value - this.min) / (this.max - this.min)) * 100;
-    this.style.background = `linear-gradient(to right, #d3d3d3 ${percentage}%, #400A14 ${percentage}%)`;
-    output.style.left = `calc(${percentage}% - (${thumbWidth}px / 2))`;
-    output.innerHTML = `%${slider.value}`;
-
-    renderMovies();
-  };
-
-  slider.oninput();
-}
 
 function movieHTML(movie) {
   return `
