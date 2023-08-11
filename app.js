@@ -18,18 +18,16 @@ async function getMovies(searchInput, page = 1) {
   return data;
 }
 
-window.addEventListener("scroll", async () => {
-  const loadedMovies = moviesWrapper.querySelectorAll(".movie").length;
-  if (
-    loadedMovies < totalResults &&
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 500
-  ) {
-    document.querySelector(".loading-indicator").style.display = "block"; // Show the loader
-    currentPage++;
-    await renderMovies(true);
-    document.querySelector(".loading-indicator").style.display = "none"; // Hide the loader after movies are loaded
+window.addEventListener('scroll', async () => {
+  const loadedMovies = moviesWrapper.querySelectorAll('.movie').length;
+  if (loadedMovies < totalResults && window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+      document.querySelector('.loading-indicator').style.display = 'block'; // Show the loader
+      currentPage++;
+      await renderMovies(true);
+      document.querySelector('.loading-indicator').style.display = 'none'; // Hide the loader after movies are loaded
   }
 });
+
 
 function setupSlider() {
   output.innerHTML = slider.value;
@@ -47,9 +45,13 @@ function setupSlider() {
   slider.oninput();
 }
 
-// In the future I would want to make the slider functional,
-// so that it filters by rating of the movie, but unfortunately the API
-// I used doesn't have ratings section I don't think
+// In the future I would want to make the slider functional, 
+// so that it filters by rating of the movie, but unfortunately 
+// with the approach I was thinking of, for each movie in the Search results,
+// I was making a separate API call to fetch its details. 
+// This slowed down the rendering process because of the wait time 
+// for each API call to complete.
+
 
 async function renderMovies(append = false) {
   moviesWrapper.classList.add("movies__loading");
@@ -75,14 +77,11 @@ async function searchMovies() {
   renderMovies();
 }
 
-window.addEventListener("scroll", async () => {
-  const loadedMovies = moviesWrapper.querySelectorAll(".movie").length;
-  if (
-    loadedMovies < totalResults &&
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 500
-  ) {
-    currentPage++;
-    await renderMovies(true);
+window.addEventListener('scroll', async () => {
+  const loadedMovies = moviesWrapper.querySelectorAll('.movie').length;
+  if (loadedMovies < totalResults && window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+      currentPage++;
+      await renderMovies(true);
   }
 });
 
