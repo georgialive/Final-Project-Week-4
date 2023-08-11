@@ -283,6 +283,48 @@ select {
     max-width: 200px;
 }
 
+.movies {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.movie {
+    position: relative;
+    margin: 15px;
+    width: 400px;
+    height: 450px;
+    border-style: solid;
+    border-color: #400A14;
+    border-width: 4px;
+    border-radius: 50px;
+    background-color: #400A14;
+    overflow-wrap: break-word;
+    width: 280px;
+    display: flex; /* Added this to make .movie a flex container */
+    flex-direction: column; /* Stack child elements vertically */
+    align-items: center; /* Center child elements horizontally */
+    justify-content: center; /* Center child elements vertically */
+}
+
+.movie__img {
+    height: 280px;
+    width: 175px;
+    border-radius: 25px;
+}
+
+.movie__title {
+    font-family: 'Lato', sans-serif;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+    color:  white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+}
+
 /* 
 
 LOADING STATE
